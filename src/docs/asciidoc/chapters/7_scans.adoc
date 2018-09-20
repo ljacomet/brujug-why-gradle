@@ -1,0 +1,33 @@
+[background-color="#01303a"]
+== Build scans
+
+=== What are build scans?
+
+[%step]
+* Persistent record of what happened during a build
+* Permanent and shareable URL
+* For developers and build engineers
+
+[%notitle]
+[state=demo]
+[background-color="#01303a"]
+=== Demo 1.1
+
+Demo
+
+[NOTE.speaker]
+--
+* Show ehcache build scan
+* Run with failing test, show scan
+--
+
+=== Measure and optimize
+
+[%step]
+* Need data
+[%step]
+** Use the Gradle Enterprise export API
+
+=== Export API
+
+video::202944447[vimeo,height=520]

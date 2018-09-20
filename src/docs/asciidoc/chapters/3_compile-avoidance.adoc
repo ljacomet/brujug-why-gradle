@@ -1,0 +1,350 @@
+[background-color="#01303a"]
+== Compile avoidance
+
+=== Compile classpath leakage
+
+[state=show-dep-graph0]
+=== A typical dependency graph
+
+++++
+<div id="cy0" class="drawing"></div>
+
+<script>
+addDependencyGraph(0, function() {});
+</script>
+
+++++
+
+[state=show-dep-graph1]
+=== Cascading recompilation
+
+++++
+<div id="cy1" class="drawing"></div>
+
+<script>
+addDependencyGraph(1, function(cy) {
+   var highlightNextEle = function(elts){
+       for (i=0; i<elts.length; i++) {
+          elts[i].addClass('highlighted');
+          var incomingEdges = elts[i].incomers('edge');
+          (function(incomingEdges) {
+             setTimeout(function() {
+                for (j=0; j<incomingEdges.length; j++) {
+                   incomingEdges[j].addClass('highlighted');
+                };
+                highlightNextEle(incomingEdges.sources());
+             }, 1000);
+          })(incomingEdges);
+       }
+
+
+   };
+
+   // kick off first highlight
+   highlightNextEle(cy.$('#i'));
+});
+</script>
+
+++++
+
+=== Cascading recompilation
+
+But also with side effects:
+
+* compile dependencies _leak_ to the downstream consumers
+* hard to upgrade dependencies without breaking clients
+
+[background-color="#01303a"]
+== Separating API and implementation
+
+=== Example
+
+[source,java]
+----
+import com.acme.model.Person;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
+
+...
+
+public Set<String> getNames(Set<Person> persons) {
+   return ImmutableSet.copyOf(Iterables.transform(persons, TO_NAME))
+}
+----
+
+=== Reality is ...
+
+[source,java]
+----
+// exported dependency
+import com.acme.model.Person;
+// internal dependencies
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
+
+...
+
+public Set<String> getNames(Set<Person> persons) {
+   return ImmutableSet.copyOf(
+            Iterables.transform(persons, TO_NAME))
+}
+----
+
+=== Matching Gradle build
+
+[source,groovy]
+----
+// This component has an API and an implementation
+apply plugin: 'java-library'
+
+dependencies {
+   api project(':model')
+   implementation 'com.google.guava:guava:18.0'
+}
+----
+
+[state=show-dep-graph2]
+=== API vs impl graph
+
+++++
+<div id="cy2" class="drawing"></div>
+
+<script>
+addDependencyGraph(2, function(cy) {
+   var api = cy.filter('edge[kind="api"]');
+   for (i=0; i<api.length; i++) {
+      api[i].addClass('api');
+   }
+});
+</script>
+
+++++
+
+[state=show-dep-graph3]
+=== Change to impl dependency
+
+++++
+
+<div id="cy3" class="drawing"></div>
+
+<script>
+addDependencyGraph(3, function(cy) {
+   var api = cy.filter('edge[kind="api"]');
+   for (i=0; i<api.length; i++) {
+      api[i].addClass('api');
+   }
+   var highlightNextEle = function(elts){
+       for (i=0; i<elts.length; i++) {
+          (function(node) {
+             var incomingEdges = node.incomers('edge');
+             (function(incomingEdges) {
+                setTimeout(function() {
+                   node.addClass('highlighted');
+                   for (j=0; j<incomingEdges.length; j++) {
+                      incomingEdges[j].addClass('highlighted');
+                      incomingEdges[j].source().addClass('highlighted');
+                   };
+                   //highlightNextEle(incomingEdges.sources());
+                }, 1000);
+             })(incomingEdges);
+          })(elts[i]);
+       }
+
+
+   };
+
+   // kick off first highlight
+   highlightNextEle(cy.$('#i'));
+});
+</script>
+
+++++
+
+[state=show-dep-graph4]
+=== Change to API dependency
+
+++++
+
+<div id="cy4" class="drawing"></div>
+
+<script>
+addDependencyGraph(4, function(cy) {
+   var api = cy.filter('edge[kind="api"]');
+   for (i=0; i<api.length; i++) {
+      api[i].addClass('api');
+   }
+   var highlightNextEle = function(elts){
+       for (i=0; i<elts.length; i++) {
+          (function(node) {
+             var incomingEdges = node.incomers('edge[kind="api"]');
+             (function(incomingEdges) {
+                setTimeout(function() {
+                   node.addClass('highlighted');
+                   for (j=0; j<incomingEdges.length; j++) {
+                      incomingEdges[j].removeClass('api');
+                      incomingEdges[j].addClass('highlighted');
+                      incomingEdges[j].source().addClass('highlighted');
+                   };
+                   highlightNextEle(incomingEdges.sources());
+                }, 1000);
+             })(incomingEdges);
+          })(elts[i]);
+       }
+
+
+   };
+
+   // kick off first highlight
+   highlightNextEle(cy.$('#h'));
+});
+</script>
+
+++++
+
+[background-color="#01303a"]
+== Consumers are not equal
+
+=== Compile classpath
+
+What does a *compiler* care about?
+
+[%step]
+* Input: jars, or class directories
+* Jar: class files
+* Class file: both API and implementation
+
+=== Compile classpath
+
+What we provide to the compiler
+
+```
+public class Foo {
+    private int x = 123;
+
+    public int getX() { return x; }
+    public int getSquaredX() { return x * x; }
+}
+```
+
+=== Compile classpath
+
+What the compiler cares about:
+
+```
+public class Foo {
+    public int getX()
+    public int getSquaredX()
+}
+```
+
+=== Compile classpath
+
+But it could also be
+
+```
+public class Foo {
+    public int getSquaredX()
+    public int getX()
+}
+```
+
+**only public signatures matter**
+
+=== Compile classpath snapshotting
+
+[%step]
+* Compute a hash of the signature of class : `aedb00fd`
+* Combine hashes of all classes : `e45bdc17`
+* Combine hashes of all input on classpath: `4500fc1`
+* Result: hash of the compile classpath
+* Only consists of what is _relevant_ to the `javac` compiler
+
+=== Runtime classpath
+
+What does the runtime care about?
+
+=== Runtime classpath
+
+What does the runtime care about:
+
+```
+public class Foo {
+    private int x = 123;
+
+    public int getX() { return x; }
+    public int getSquaredX() { return x * x; }
+}
+```
+
+At runtime, *everything* matters, from classes to resources.
+
+=== Compile vs runtime classpath
+
+In practice:
+
+[source,java]
+----
+@InputFiles
+@CompileClasspath
+FileCollection getCompileClasspath() { ... }
+
+@InputFiles
+@Classpath
+FileCollection getRuntimeClasspath() { ... }
+----
+
+=== Compile avoidance
+
+* _compile_ and _runtime_ classpath have different _semantics_
+* Gradle makes the difference
+* Ignores irrelevant (non ABI) changes to compile classpath
+
+[state=show-dep-graph5]
+=== Effect on recompilations
+
+++++
+
+<div id="cy5" class="drawing"></div>
+
+<script>
+addDependencyGraph(5, function(cy) {
+   var api = cy.filter('edge[kind="api"]');
+   for (i=0; i<api.length; i++) {
+      api[i].addClass('api');
+   }
+   var highlightNextEle = function(elts, depth){
+       if (depth>=1) { return; }
+       for (i=0; i<elts.length; i++) {
+          (function(node) {
+             var incomingEdges = node.incomers('edge[kind="api"]');
+             (function(incomingEdges) {
+                setTimeout(function() {
+                   node.addClass('highlighted');
+                   for (j=0; j<incomingEdges.length; j++) {
+                      incomingEdges[j].removeClass('api');
+                      incomingEdges[j].addClass('highlighted');
+                      incomingEdges[j].source().addClass('highlighted');
+                   };
+                   highlightNextEle(incomingEdges.sources(), depth+1);
+                }, 1000);
+             })(incomingEdges);
+          })(elts[i]);
+       }
+
+
+   };
+
+   // kick off first highlight
+   highlightNextEle(cy.$('#h'), 0);
+});
+</script>
+
+++++
+
+=== Icing on the cake
+
+* Upgrade a dependency from `1.0.1` to `1.0.2`
+* If ABI hasn't changed, Gradle will _not_ recompile
+* Even if the name of the jar is different (`mydep-1.0.1.jar` vs `mydep-1.0.2.jar`)
+* Because only _contents_ matter
+

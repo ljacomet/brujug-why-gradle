@@ -1,0 +1,86 @@
+[background-color="#01303a"]
+== Build cache
+
+=== How does it work?
+
+Gradle is reusing results +
+from *last time*  +
+when we ran *this build* +
+ on *this machine*. +
+
+=== Gradle can do better
+
+=== Why not...
+
+Reuse results +
+from *anytime before*  +
+when we ran *any build* +
+ *anywhere*. +
+
+=== In practice
+
+[source,text]
+----
+$> gradle --build-cache assemble
+Build cache is an incubating feature.
+:compileJava FROM-CACHE
+:processResources
+:classes
+:jar
+:assemble
+
+BUILD SUCCESSFUL
+----
+
+[%notitle]
+[state=demo]
+[background-color="#01303a"]
+=== Demo 6.1
+
+Demo
+
+[NOTE.speaker]
+--
+* Show Ehcache with build cache
+--
+
+[background-color="#01303a"]
+== Build cache concepts
+
+=== Build cache key
+
+Calculated using:
+[%step]
+* Task implementation (including Gradle version)
+* Task action implementations
+* Names of the task outputs
+* Names and values of the task inputs
+* *Note:* Task name is _not_ an input
+
+=== Builds on top oif incremental builds
+
+[%step]
+* Get reliable incremental builds first
+* Next work on making them cacheable
+* Cacheable tasks require additional information for path sensitivity
+
+=== Repeatable outputs
+
+[%step]
+* Same inputs must produce same outputs
+* May be byte-for-byte equivalent
+* May be semantically equivalent (with normalization)
+
+=== Normalization
+
+[%step]
+* `@InputFiles` - no normalization
+* `@CompileClasspath` - Extracts ABI from classes
+* `@Classpath` - treats files as a runtime Java classpath
+* Configurable runtime normalization to ignore files
+
+=== Deploying a build cache
+
+* Stable for Java, Groovy and Scala projects
+* Gradle Enterprise provides a backend for managing, monitoring and replicating caches
+* Dockerhub: https://hub.docker.com/r/gradle/build-cache-node/[gradle/build-cache-node]

@@ -1,0 +1,73 @@
+[background-color="#01303a"]
+== Incremental compilation
+
+=== Basics
+
+[%step]
+* Given a set of source files
+* Only compile the files which have changed...
+* and their dependencies
+* Language specific
+
+=== In practice
+
+[source,java]
+----
+import org.apache.commons.math3.complex.Complex;
+
+public class Library {
+    public Complex someLibraryMethod() {
+        return Complex.I;
+    }
+}
+----
+
+[%step]
+* `Complex` is a dependency of `Library`
+* if `Complex` is changed, we need to recompile `Library`
+* if `ComplexUtils` is changed, no need to recompile
+
+=== Gotcha
+
+[source,java]
+----
+import org.apache.commons.math3.dfp.Dfp;
+
+public class LibraryUtils {
+   public static int getMaxExp() {
+      return Dfp.MAX_EXP;
+   }
+}
+----
+
+[%step]
+* `Dfp` is a dependency of `LibraryUtils`
+* so if `MAX_EXP` changes, we should recompile `LibraryUtils`, right?
+
+=== Wait a minute...
+
+> `javap -v build/classes/java/main/LibraryUtils.class`
+
+```
+...
+  public static int getMaxExp();
+    descriptor: ()I
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=1, locals=0, args_size=0
+         0: ldc           #3                  // int 32768
+         2: ireturn
+```
+
+[%step]
+* reference to `Dfp` is gone!
+* compiler _inlines_ some constants
+* JLS says compiler doesn't have to add the dependent class to constant pool
+
+=== What Gradle does
+
+[%step]
+* Analyze all _bytecode_ of all classes
+* Record which constants are used in which file
+* Whenever a producer changes, check if a _constant_ changed
+* If yes, recompile _everything_
