@@ -1,0 +1,383 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="author" content="Louis Jacomet (@ljacomet), Gradle Inc." /><title>: Why Gradle?</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js/css/theme/summit.css" id="theme" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" /><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script><script src="reveal.js/css/theme/cytoscape.min.js"></script>
+<script src="https://cdn.rawgit.com/cpettitt/dagre/v0.7.4/dist/dagre.min.js"></script>
+<script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-dagre/1.5.0/cytoscape-dagre.js"></script>
+<script src="reveal.js/css/theme/dependency-graph.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.4/d3.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+
+</head><body><div class="reveal"><div class="slides"><section class="title" data-state="title" data-transition="zoom" data-transition-speed="fast" data-background-image="./images/title.jpeg"><h1></h1><h2>Why Gradle?</h2><p class="author"><small>Louis Jacomet (@ljacomet), Gradle Inc.</small></p></section><section id="who-am-i"><h2>Who am I</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="groovy language-groovy">speaker {
+    name 'Louis Jacomet'
+    company 'Gradle Inc'
+    title 'Lead Software Engineer'
+    past ['Terracotta / Ehcache', 'Freelance consultant'],
+    failures Stream.of(bugs),
+    twitter '@ljacomet',
+    github 'ljacomet',
+    extraDescription '''Not fully figured out
+how to stay out of management?!?'''
+}</code></pre></div></div></section>
+<section><section id="what-is-gradle" data-background-color="#01303a"><h2>What is Gradle?</h2></section><section id="gradles-purpose"><h2>Gradle&#8217;s purpose</h2><div class="paragraph"><p>Gradle is a build and automation tool.</p></div>
+<div class="ulist"><ul><li class="fragment"><p>JVM based</p></li><li class="fragment"><p>Implemented in Java</p></li><li class="fragment"><p>100% Free Open Source - Apache Standard License 2.0</p></li></ul></div></section><section id="agnostic-build-system"><h2>Agnostic Build System</h2><div class="ulist"><ul><li><p>Java ecosystem</p><div class="ulist"><ul><li><p>Groovy, Kotlin, Scala, &#8230;&#8203;</p></li></ul></div></li><li><p>Native ecosystem</p><div class="ulist"><ul><li><p>C, C++, Swift, &#8230;&#8203;</p></li></ul></div></li><li><p>Android</p></li><li><p>Misc</p><div class="ulist"><ul><li><p>Go, Asciidoctor, &#8230;&#8203;</p></li></ul></div></li></ul></div></section><section id="gradle-in-figures"><h2>Gradle in figures</h2><div class="ulist"><ul><li class="fragment"><p>&gt; 6.0M downloads / month</p></li><li class="fragment"><p><a href="https://techcrunch.com/2017/04/07/tracking-the-explosive-growth-of-open-source-software/">#17 OSS projects worldwide</a></p></li><li class="fragment"><p>35+ Gradle Engineers</p></li><li class="fragment"><p>300K builds/week @ LinkedIn</p></li></ul></div></section><section id="gradle-inc"><h2>Gradle Inc.</h2><div class="paragraph"><p>The company behind Gradle.</p></div>
+<div class="ulist"><ul><li class="fragment"><p>Build Happiness</p></li><li class="fragment"><p>Employs full time engineers</p></li><li class="fragment"><p>Providing Gradle Build Scans and Gradle Enterprise</p></li><li class="fragment"><p>(Gradle consulting, support, development services etc.)</p></li><li class="fragment"><p>(Training: online, public and in-house)</p></li></ul></div></section><section id="gradle-is-hiring"><h2>Gradle is hiring!</h2><div class="ulist"><ul><li><p>Fully distributed development team</p></li><li><p>Exciting project used by millions</p></li><li><p>Build tool team and Gradle enterprise positions</p></li></ul></div>
+<div class="paragraph"><p>If anything you hear from now on sounds like a great problem to solve,</p></div>
+<div class="paragraph"><p>Talk to us!</p></div>
+<div class="paragraph"><p><a href="https://gradle.com/careers/" class="bare">https://gradle.com/careers/</a></p></div></section></section>
+<section><section id="developer-productivity" data-background-color="#01303a"><h2>Developer productivity</h2></section><section id="influences-on-developer-productivity"><h2>Influences on <br /> developer productivity</h2><div class="ulist"><ul><li class="fragment"><p>IDE</p></li><li class="fragment"><p>Languages and frameworks</p></li><li class="fragment"><p>Good hardware</p></li><li class="fragment"><p>Training</p></li><li class="fragment"><p>&#8230;&#8203;</p></li><li class="fragment"><p>Food in cafeteria</p></li></ul></div></section><section id="developer-productivity-2"><h2>Developer productivity</h2><div class="ulist"><ul><li class="fragment"><p>Fast feedback cycles</p></li><li class="fragment"><p>High degree of automation</p></li><li class="fragment"><p>Faster debugging</p></li></ul></div></section><section id="fast-feedback-cycles"><h2>Fast feedback cycles</h2><div class="ulist"><ul><li class="fragment"><p>Maximum build performance</p></li><li class="fragment"><p>Measure and optimize</p></li><li class="fragment"><p>Build reliability</p></li></ul></div></section><section id="maximum-build-performance"><h2>Maximum build performance</h2><div class="quoteblock"><blockquote><div class="paragraph"><p><strong>Maximum build performance</strong> is the maximum achievable performance of a build system <strong>for your code base.</strong></p></div></blockquote></div></section><section id="personal-experience"><h2>Personal experience</h2><div class="ulist"><ul><li class="fragment"><p>Large Java multi project with 20+ projects</p></li><li class="fragment"><p>Using Maven as the build tool</p><div class="ulist"><ul><li class="fragment"><p>Minutes to get a product archive with <code>mvn clean package -DskipTests</code></p></li><li class="fragment"><p>Full build on CI takes 2h30+</p></li></ul></div></li><li class="fragment"><p>Migrated to Gradle</p><div class="ulist"><ul><li class="fragment"><p>Seconds to get a product archive with <code>./gradlew assemble</code></p></li><li class="fragment"><p>Full build on CI takes 40 minutes, thanks to parallelization</p></li></ul></div></li></ul></div></section><section id="how"><h2>How</h2><div class="ulist"><ul><li class="fragment"><p>Compile avoidance</p></li><li class="fragment"><p>Incremental compilation</p></li><li class="fragment"><p>Incremental builds</p></li><li class="fragment"><p>Build cache</p></li></ul></div></section><section id="measure-and-optimize"><h2>Measure and optimize</h2><div class="ulist"><ul><li class="fragment"><p>Need data</p><div class="ulist"><ul><li class="fragment"><p>CI server captures times</p></li><li class="fragment"><p>What about developer builds</p></li></ul></div></li></ul></div></section><section id="high-degree-of-automation"><h2>High degree of automation</h2><div class="ulist"><ul><li class="fragment"><p>Composite builds</p></li><li class="fragment"><p>Source dependencies</p></li></ul></div></section><section id="faster-debugging"><h2>Faster debugging</h2><div class="ulist"><ul><li class="fragment"><p>Build scans</p></li></ul></div></section></section>
+<section id="agenda"><h2>Agenda</h2><div class="ulist"><ul><li class="fragment"><p>Java Gradle build anatomy</p></li><li class="fragment"><p>Incremental builds</p></li><li class="fragment"><p>Build cache</p></li><li class="fragment"><p>Build scans</p></li></ul></div></section>
+<section><section id="anatomy-of-a-gradle-project" data-background-color="#01303a"><h2>Anatomy of a Gradle project</h2></section><section id="anatomy"><div class="paragraph"><p>Gradle is based on a set of conventions.</p></div>
+<div class="paragraph"><p>Some inherited from the history of Java build systems:</p></div>
+<div class="ulist"><ul><li><p><code>src/main/java</code></p></li><li><p><code>src/test/resources</code></p></li></ul></div>
+<div class="paragraph"><p>Others brought by Gradle:</p></div>
+<div class="ulist"><ul><li><p>The name of the project is the name of the containing folder</p></li></ul></div></section><section id="a-simple-project"><h2>A simple project</h2><div class="imageblock" style=""><img src="./images/simpleProject.png" alt="simpleProject" width="1280" height="720" /></div></section><section id="a-multi-project-build"><h2>A multi project build</h2><div class="imageblock" style=""><img src="./images/multiProject.png" alt="multiProject" width="1280" height="720" /></div></section><section id="demo-1-1" data-background-color="#01303a" data-state="demo"><div class="paragraph"><p>Demo</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>Browse settings.xml</p></li><li><p>Browse XML project build file</p></li><li><p>Browse root build file</p></li><li><p>Browse EhDeploy buildSrc plugin</p></li></ul></div></aside></section><section id="the-build-file"><h2>The build file</h2><div class="ulist"><ul><li><p>By default, named <code>build.gradle</code> which can be configured.</p></li><li><p>Describes what the build is about through configuration.</p></li></ul></div></section><section id="companion-files"><h2>Companion files</h2><div class="ulist"><ul><li><p><code>settings.gradle</code>: Configure the project(s) that compose the build</p></li><li><p><code>gradle.properties</code>: Defines properties specific to the build, which can be overridden</p></li></ul></div></section><section id="additional-build-artifacts"><h2>Additional build artifacts</h2><div class="paragraph"><p>Directories:</p></div>
+<div class="ulist"><ul><li><p><code>buildSrc</code></p></li><li><p><code>.gradle</code></p></li><li><p><code>build</code></p></li></ul></div></section><section id="the-gradle-wrapper"><h2>The Gradle Wrapper</h2><div class="ulist"><ul><li class="fragment"><p>Bootstraps Gradle for project contributors</p></li><li class="fragment"><p>Project controls Gradle version</p></li></ul></div></section></section>
+<section><section id="compile-avoidance" data-background-color="#01303a"><h2>Compile avoidance</h2></section><section id="compile-classpath-leakage"><h2>Compile classpath leakage</h2></section><section id="a-typical-dependency-graph" data-state="show-dep-graph0"><h2>A typical dependency graph</h2><div id="cy0" class="drawing"></div>
+
+<script>
+addDependencyGraph(0, function() {});
+</script></section><section id="cascading-recompilation" data-state="show-dep-graph1"><h2>Cascading recompilation</h2><div id="cy1" class="drawing"></div>
+
+<script>
+addDependencyGraph(1, function(cy) {
+   var highlightNextEle = function(elts){
+       for (i=0; i<elts.length; i++) {
+          elts[i].addClass('highlighted');
+          var incomingEdges = elts[i].incomers('edge');
+          (function(incomingEdges) {
+             setTimeout(function() {
+                for (j=0; j<incomingEdges.length; j++) {
+                   incomingEdges[j].addClass('highlighted');
+                };
+                highlightNextEle(incomingEdges.sources());
+             }, 1000);
+          })(incomingEdges);
+       }
+
+
+   };
+
+   // kick off first highlight
+   highlightNextEle(cy.$('#i'));
+});
+</script></section><section id="cascading-recompilation-2"><h2>Cascading recompilation</h2><div class="paragraph"><p>But also with side effects:</p></div>
+<div class="ulist"><ul><li><p>compile dependencies <em>leak</em> to the downstream consumers</p></li><li><p>hard to upgrade dependencies without breaking clients</p></li></ul></div></section></section>
+<section><section id="separating-api-and-implementation" data-background-color="#01303a"><h2>Separating API and implementation</h2></section><section id="example"><h2>Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">import com.acme.model.Person;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
+
+...
+
+public Set&lt;String&gt; getNames(Set&lt;Person&gt; persons) {
+   return ImmutableSet.copyOf(Iterables.transform(persons, TO_NAME))
+}</code></pre></div></div></section><section id="reality-is"><h2>Reality is &#8230;&#8203;</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// exported dependency
+import com.acme.model.Person;
+// internal dependencies
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
+
+...
+
+public Set&lt;String&gt; getNames(Set&lt;Person&gt; persons) {
+   return ImmutableSet.copyOf(
+            Iterables.transform(persons, TO_NAME))
+}</code></pre></div></div></section><section id="matching-gradle-build"><h2>Matching Gradle build</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="groovy language-groovy">// This component has an API and an implementation
+apply plugin: 'java-library'
+
+dependencies {
+   api project(':model')
+   implementation 'com.google.guava:guava:18.0'
+}</code></pre></div></div></section><section id="api-vs-impl-graph" data-state="show-dep-graph2"><h2>API vs impl graph</h2><div id="cy2" class="drawing"></div>
+
+<script>
+addDependencyGraph(2, function(cy) {
+   var api = cy.filter('edge[kind="api"]');
+   for (i=0; i<api.length; i++) {
+      api[i].addClass('api');
+   }
+});
+</script></section><section id="change-to-impl-dependency" data-state="show-dep-graph3"><h2>Change to impl dependency</h2><div id="cy3" class="drawing"></div>
+
+<script>
+addDependencyGraph(3, function(cy) {
+   var api = cy.filter('edge[kind="api"]');
+   for (i=0; i<api.length; i++) {
+      api[i].addClass('api');
+   }
+   var highlightNextEle = function(elts){
+       for (i=0; i<elts.length; i++) {
+          (function(node) {
+             var incomingEdges = node.incomers('edge');
+             (function(incomingEdges) {
+                setTimeout(function() {
+                   node.addClass('highlighted');
+                   for (j=0; j<incomingEdges.length; j++) {
+                      incomingEdges[j].addClass('highlighted');
+                      incomingEdges[j].source().addClass('highlighted');
+                   };
+                   //highlightNextEle(incomingEdges.sources());
+                }, 1000);
+             })(incomingEdges);
+          })(elts[i]);
+       }
+
+
+   };
+
+   // kick off first highlight
+   highlightNextEle(cy.$('#i'));
+});
+</script></section><section id="change-to-api-dependency" data-state="show-dep-graph4"><h2>Change to API dependency</h2><div id="cy4" class="drawing"></div>
+
+<script>
+addDependencyGraph(4, function(cy) {
+   var api = cy.filter('edge[kind="api"]');
+   for (i=0; i<api.length; i++) {
+      api[i].addClass('api');
+   }
+   var highlightNextEle = function(elts){
+       for (i=0; i<elts.length; i++) {
+          (function(node) {
+             var incomingEdges = node.incomers('edge[kind="api"]');
+             (function(incomingEdges) {
+                setTimeout(function() {
+                   node.addClass('highlighted');
+                   for (j=0; j<incomingEdges.length; j++) {
+                      incomingEdges[j].removeClass('api');
+                      incomingEdges[j].addClass('highlighted');
+                      incomingEdges[j].source().addClass('highlighted');
+                   };
+                   highlightNextEle(incomingEdges.sources());
+                }, 1000);
+             })(incomingEdges);
+          })(elts[i]);
+       }
+
+
+   };
+
+   // kick off first highlight
+   highlightNextEle(cy.$('#h'));
+});
+</script></section></section>
+<section><section id="consumers-are-not-equal" data-background-color="#01303a"><h2>Consumers are not equal</h2></section><section id="compile-classpath"><h2>Compile classpath</h2><div class="paragraph"><p>What does a <strong>compiler</strong> care about?</p></div>
+<div class="ulist"><ul><li class="fragment"><p>Input: jars, or class directories</p></li><li class="fragment"><p>Jar: class files</p></li><li class="fragment"><p>Class file: both API and implementation</p></li></ul></div></section><section id="compile-classpath-2"><h2>Compile classpath</h2><div class="paragraph"><p>What we provide to the compiler</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>public class Foo {
+    private int x = 123;
+
+    public int getX() { return x; }
+    public int getSquaredX() { return x * x; }
+}</code></pre></div></div></section><section id="compile-classpath-3"><h2>Compile classpath</h2><div class="paragraph"><p>What the compiler cares about:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>public class Foo {
+    public int getX()
+    public int getSquaredX()
+}</code></pre></div></div></section><section id="compile-classpath-4"><h2>Compile classpath</h2><div class="paragraph"><p>But it could also be</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>public class Foo {
+    public int getSquaredX()
+    public int getX()
+}</code></pre></div></div>
+<div class="paragraph"><p><strong>only public signatures matter</strong></p></div></section><section id="compile-classpath-snapshotting"><h2>Compile classpath snapshotting</h2><div class="ulist"><ul><li class="fragment"><p>Compute a hash of the signature of class : <code>aedb00fd</code></p></li><li class="fragment"><p>Combine hashes of all classes : <code>e45bdc17</code></p></li><li class="fragment"><p>Combine hashes of all input on classpath: <code>4500fc1</code></p></li><li class="fragment"><p>Result: hash of the compile classpath</p></li><li class="fragment"><p>Only consists of what is <em>relevant</em> to the <code>javac</code> compiler</p></li></ul></div></section><section id="runtime-classpath"><h2>Runtime classpath</h2><div class="paragraph"><p>What does the runtime care about?</p></div></section><section id="runtime-classpath-2"><h2>Runtime classpath</h2><div class="paragraph"><p>What does the runtime care about:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>public class Foo {
+    private int x = 123;
+
+    public int getX() { return x; }
+    public int getSquaredX() { return x * x; }
+}</code></pre></div></div>
+<div class="paragraph"><p>At runtime, <strong>everything</strong> matters, from classes to resources.</p></div></section><section id="compile-vs-runtime-classpath"><h2>Compile vs runtime classpath</h2><div class="paragraph"><p>In practice:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@InputFiles
+@CompileClasspath
+FileCollection getCompileClasspath() { ... }
+
+@InputFiles
+@Classpath
+FileCollection getRuntimeClasspath() { ... }</code></pre></div></div></section><section id="compile-avoidance-2"><h2>Compile avoidance</h2><div class="ulist"><ul><li><p><em>compile</em> and <em>runtime</em> classpath have different <em>semantics</em></p></li><li><p>Gradle makes the difference</p></li><li><p>Ignores irrelevant (non ABI) changes to compile classpath</p></li></ul></div></section><section id="effect-on-recompilations" data-state="show-dep-graph5"><h2>Effect on recompilations</h2><div id="cy5" class="drawing"></div>
+
+<script>
+addDependencyGraph(5, function(cy) {
+   var api = cy.filter('edge[kind="api"]');
+   for (i=0; i<api.length; i++) {
+      api[i].addClass('api');
+   }
+   var highlightNextEle = function(elts, depth){
+       if (depth>=1) { return; }
+       for (i=0; i<elts.length; i++) {
+          (function(node) {
+             var incomingEdges = node.incomers('edge[kind="api"]');
+             (function(incomingEdges) {
+                setTimeout(function() {
+                   node.addClass('highlighted');
+                   for (j=0; j<incomingEdges.length; j++) {
+                      incomingEdges[j].removeClass('api');
+                      incomingEdges[j].addClass('highlighted');
+                      incomingEdges[j].source().addClass('highlighted');
+                   };
+                   highlightNextEle(incomingEdges.sources(), depth+1);
+                }, 1000);
+             })(incomingEdges);
+          })(elts[i]);
+       }
+
+
+   };
+
+   // kick off first highlight
+   highlightNextEle(cy.$('#h'), 0);
+});
+</script></section><section id="icing-on-the-cake"><h2>Icing on the cake</h2><div class="ulist"><ul><li><p>Upgrade a dependency from <code>1.0.1</code> to <code>1.0.2</code></p></li><li><p>If ABI hasn&#8217;t changed, Gradle will <em>not</em> recompile</p></li><li><p>Even if the name of the jar is different (<code>mydep-1.0.1.jar</code> vs <code>mydep-1.0.2.jar</code>)</p></li><li><p>Because only <em>contents</em> matter</p></li></ul></div></section></section>
+<section><section id="incremental-compilation" data-background-color="#01303a"><h2>Incremental compilation</h2></section><section id="basics"><h2>Basics</h2><div class="ulist"><ul><li class="fragment"><p>Given a set of source files</p></li><li class="fragment"><p>Only compile the files which have changed&#8230;&#8203;</p></li><li class="fragment"><p>and their dependencies</p></li><li class="fragment"><p>Language specific</p></li></ul></div></section><section id="in-practice"><h2>In practice</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">import org.apache.commons.math3.complex.Complex;
+
+public class Library {
+    public Complex someLibraryMethod() {
+        return Complex.I;
+    }
+}</code></pre></div></div>
+<div class="ulist"><ul><li class="fragment"><p><code>Complex</code> is a dependency of <code>Library</code></p></li><li class="fragment"><p>if <code>Complex</code> is changed, we need to recompile <code>Library</code></p></li><li class="fragment"><p>if <code>ComplexUtils</code> is changed, no need to recompile</p></li></ul></div></section><section id="gotcha"><h2>Gotcha</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">import org.apache.commons.math3.dfp.Dfp;
+
+public class LibraryUtils {
+   public static int getMaxExp() {
+      return Dfp.MAX_EXP;
+   }
+}</code></pre></div></div>
+<div class="ulist"><ul><li class="fragment"><p><code>Dfp</code> is a dependency of <code>LibraryUtils</code></p></li><li class="fragment"><p>so if <code>MAX_EXP</code> changes, we should recompile <code>LibraryUtils</code>, right?</p></li></ul></div></section><section id="wait-a-minute"><h2>Wait a minute&#8230;&#8203;</h2><div class="quoteblock"><blockquote><div class="paragraph"><p><code>javap -v build/classes/java/main/LibraryUtils.class</code></p></div></blockquote></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>...
+  public static int getMaxExp();
+    descriptor: ()I
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=1, locals=0, args_size=0
+         0: ldc           #3                  // int 32768
+         2: ireturn</code></pre></div></div>
+<div class="ulist"><ul><li class="fragment"><p>reference to <code>Dfp</code> is gone!</p></li><li class="fragment"><p>compiler <em>inlines</em> some constants</p></li><li class="fragment"><p>JLS says compiler doesn&#8217;t have to add the dependent class to constant pool</p></li></ul></div></section><section id="what-gradle-does"><h2>What Gradle does</h2><div class="ulist"><ul><li class="fragment"><p>Analyze all <em>bytecode</em> of all classes</p></li><li class="fragment"><p>Record which constants are used in which file</p></li><li class="fragment"><p>Whenever a producer changes, check if a <em>constant</em> changed</p></li><li class="fragment"><p>If yes, recompile <em>everything</em></p></li></ul></div></section></section>
+<section><section id="incremental-builds" data-background-color="#01303a"><h2>Incremental builds</h2></section><section id="why-does-it-matter"><h2>Why does it matter?</h2><div class="ulist"><ul><li><p>Gradle is meant for incremental builds</p></li><li><p><code>clean</code> is a waste of time</p></li></ul></div></section><section id="the-incrementality-test"><h2>The <em>incrementality</em> test</h2><div class="ulist"><ul><li class="fragment"><p>Run a build</p></li><li class="fragment"><p>Run again with no change</p></li><li class="fragment"><p>If a task was re-executed, time is wasted</p><div class="ulist"><ul><li class="fragment"><p>Investigate!</p></li></ul></div></li></ul></div></section></section>
+<section><section id="properly-writing-tasks" data-background-color="#01303a"><h2>Properly writing tasks</h2></section><section id="example-building-a-shaded-jar"><h2>Example: building a shaded jar</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="groovy language-groovy">task shadedJar(type: ShadedJar) {
+   jarFile = file("$buildDir/libs/shaded.jar")
+   classpath = configurations.runtime
+   mapping = ['org.apache': 'shaded.org.apache']
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>What are the task inputs?</p></li><li><p>What are the task outputs?</p></li><li><p>What if one of them changes?</p></li></ul></div></section><section id="declaring-inputs"><h2>Declaring inputs</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class ShadedJar extends DefaultTask {
+   ...
+   @InputFiles
+   FileCollection getClasspath() { ... }
+
+   @Input
+   Map&lt;String, String&gt; getMapping() { ... }
+}</code></pre></div></div></section><section id="declaring-outputs"><h2>Declaring outputs</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class ShadedJar extends DefaultTask {
+   ...
+
+   @OutputFile
+   File getJarFile() { ... }
+}</code></pre></div></div></section><section id="know-why-your-task-is-out-of-date"><h2>Know why your task is out-of-date</h2><div class="imageblock" style=""><img src="./images/task-out-of-date.png" alt="task out of date" width="1280" height="415" /></div></section><section id="incremental-task-inputs"><h2>Incremental task inputs</h2><div class="ulist"><ul><li><p>Know precisely <em>which</em> files have changed</p></li><li><p>Task action can perform the minimal amount of work</p></li></ul></div></section><section id="incremental-task-inputs-2"><h2>Incremental task inputs</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@TaskAction
+public void execute(IncrementalTaskInputs inputs) {
+   if (!inputs.isIncremental()) {
+      // clean build, for example
+      // ...
+   } else {
+      inputs.outOfDate(change -&gt;
+         if (change.isAdded()) {
+           ...
+         } else if (change.isRemoved()) {
+           ...
+         } else {
+            ...
+         }
+      });
+   }
+}</code></pre></div></div></section></section>
+<section><section id="build-cache" data-background-color="#01303a"><h2>Build cache</h2></section><section id="how-does-it-work"><h2>How does it work?</h2><div class="paragraph"><p>Gradle is reusing results<br />
+from <strong>last time</strong> <br />
+when we ran <strong>this build</strong><br />
+ on <strong>this machine</strong>.<br /></p></div></section><section id="gradle-can-do-better"><h2>Gradle can do better</h2></section><section id="why-not"><h2>Why not&#8230;&#8203;</h2><div class="paragraph"><p>Reuse results<br />
+from <strong>anytime before</strong> <br />
+when we ran <strong>any build</strong><br />
+ <strong>anywhere</strong>.<br /></p></div></section><section id="in-practice-2"><h2>In practice</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="text language-text">$&gt; gradle --build-cache assemble
+Build cache is an incubating feature.
+:compileJava FROM-CACHE
+:processResources
+:classes
+:jar
+:assemble
+
+BUILD SUCCESSFUL</code></pre></div></div></section><section id="demo-6-1" data-background-color="#01303a" data-state="demo"><div class="paragraph"><p>Demo</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>Show Ehcache with build cache</p></li></ul></div></aside></section></section>
+<section><section id="build-cache-concepts" data-background-color="#01303a"><h2>Build cache concepts</h2></section><section id="build-cache-key"><h2>Build cache key</h2><div class="paragraph"><p>Calculated using:</p></div>
+<div class="ulist"><ul><li class="fragment"><p>Task implementation (including Gradle version)</p></li><li class="fragment"><p>Task action implementations</p></li><li class="fragment"><p>Names of the task outputs</p></li><li class="fragment"><p>Names and values of the task inputs</p></li><li class="fragment"><p><strong>Note:</strong> Task name is <em>not</em> an input</p></li></ul></div></section><section id="builds-on-top-oif-incremental-builds"><h2>Builds on top oif incremental builds</h2><div class="ulist"><ul><li class="fragment"><p>Get reliable incremental builds first</p></li><li class="fragment"><p>Next work on making them cacheable</p></li><li class="fragment"><p>Cacheable tasks require additional information for path sensitivity</p></li></ul></div></section><section id="repeatable-outputs"><h2>Repeatable outputs</h2><div class="ulist"><ul><li class="fragment"><p>Same inputs must produce same outputs</p></li><li class="fragment"><p>May be byte-for-byte equivalent</p></li><li class="fragment"><p>May be semantically equivalent (with normalization)</p></li></ul></div></section><section id="normalization"><h2>Normalization</h2><div class="ulist"><ul><li class="fragment"><p><code>@InputFiles</code> - no normalization</p></li><li class="fragment"><p><code>@CompileClasspath</code> - Extracts ABI from classes</p></li><li class="fragment"><p><code>@Classpath</code> - treats files as a runtime Java classpath</p></li><li class="fragment"><p>Configurable runtime normalization to ignore files</p></li></ul></div></section><section id="deploying-a-build-cache"><h2>Deploying a build cache</h2><div class="ulist"><ul><li><p>Stable for Java, Groovy and Scala projects</p></li><li><p>Gradle Enterprise provides a backend for managing, monitoring and replicating caches</p></li><li><p>Dockerhub: <a href="https://hub.docker.com/r/gradle/build-cache-node/">gradle/build-cache-node</a></p></li></ul></div></section></section>
+<section><section id="build-scans" data-background-color="#01303a"><h2>Build scans</h2></section><section id="what-are-build-scans"><h2>What are build scans?</h2><div class="ulist"><ul><li class="fragment"><p>Persistent record of what happened during a build</p></li><li class="fragment"><p>Permanent and shareable URL</p></li><li class="fragment"><p>For developers and build engineers</p></li></ul></div></section><section id="demo-1-1-2" data-background-color="#01303a" data-state="demo"><div class="paragraph"><p>Demo</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>Show ehcache build scan</p></li><li><p>Run with failing test, show scan</p></li></ul></div></aside></section><section id="measure-and-optimize-2"><h2>Measure and optimize</h2><div class="ulist"><ul><li class="fragment"><p>Need data</p><div class="ulist"><ul><li class="fragment"><p>Use the Gradle Enterprise export API</p></li></ul></div></li></ul></div></section><section id="export-api"><h2>Export API</h2><div class="videoblock"><iframe width="1280" height="520" src="https://player.vimeo.com/video/202944447" frameborder="0" webkitAllowFullScreen="" mozallowfullscreen="" allowFullScreen=""></iframe></div></section></section>
+<section id="conclusion" data-background-image="./images/outro.jpeg"></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'summit',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'linear',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+});</script></body></html>
