@@ -16,4 +16,4 @@ After this session you will understand why the Grade tag line is “Build happin
 
 === Links
 
-* https://ljacomet.github.io/brujug-why-gradle[Rendered version]
+* https://ljacomet.github.io/brujug-why-gradle/[Rendered version]
